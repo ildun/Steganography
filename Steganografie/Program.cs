@@ -5,11 +5,6 @@ namespace Steganografie
 {
     class Program
     {
-        string textToWork;
-        Bitmap bitMap;
-
-
-
         static Bitmap DoSteganography(Bitmap bm, string msg)
         {
             int k = 0;
@@ -71,7 +66,7 @@ namespace Steganografie
                 return;
             }
             string mode = args[0];
-            if(mode == "Do")
+            if(mode == "do")
             {
                 string bmpLocation = args[1];
                 string msg = args[2];
@@ -79,12 +74,12 @@ namespace Steganografie
                 DoSteganography(bm, msg).Save(bmpLocation.Insert(bmpLocation.Length - 4, "_edited"));
 
             }
-            else if(mode == "Undo")
+            else if(mode == "undo")
             {
                 string bmpLocation = args[1];
                 int msgLength = Int32.Parse(args[2]);
                 Bitmap bm = (Bitmap)Bitmap.FromFile(bmpLocation);
-                Console.WriteLine("message:" + UndoSteganography(bm, msgLength));
+                Console.WriteLine("message: " + UndoSteganography(bm, msgLength));
             }
             else
             {
@@ -92,10 +87,6 @@ namespace Steganografie
                 return;
             }
             
-
-            //Bitmap bm = (Bitmap)Bitmap.FromFile(@"C:\Users\lyhin.il.2019\Downloads\sample_1920×1280.bmp");
-            //string msg = "The real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the followingThe real behavior of this is the following";
-            //Console.WriteLine(UnSteganography(DoSteganography(bm, msg), msg.Length));
         }
     }
 }
