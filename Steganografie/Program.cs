@@ -63,7 +63,7 @@ namespace Steganografie
 
         static void Main(string[] args)
         {
-            //rewrite arguments handling 
+            //todo: rewrite arguments handling 
             if (args.Length < 1)
             {
                 Console.WriteLine("Not enough or invalid command line arguments.");
