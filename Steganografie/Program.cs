@@ -7,8 +7,8 @@ namespace Steganografie
     {
         static Bitmap DoSteganography(Bitmap bm, string msg)
         {
-            int k = 0;
-            for(int j=0, i=0; j+i+ k * bm.Width < msg.Length;)
+            int j = 0, i = 0,k = 0;
+            for (; j + i + k * bm.Width < msg.Length;)
             {
                 Color c = bm.GetPixel(j, i);
                 Color setPix = Color.FromArgb(c.R, c.G, Convert.ToByte(msg[j + i +k*bm.Width]));
@@ -28,16 +28,21 @@ namespace Steganografie
                     throw new Exception("Bitmap is not big enough");
                 }
             }
+            if (!(j < bm.Width - 1 && i < bm.Height - 1)) throw new Exception("Bitmap is not big enough");
+            Color pix = bm.GetPixel(j, i);
+            Color setNullPix = Color.FromArgb(pix.R, pix.G, Convert.ToByte('\0'));
+            bm.SetPixel(j, i, setNullPix);
             return bm;
         }
 
-        static string UndoSteganography(Bitmap bm, int len)
+        static string UndoSteganography(Bitmap bm)
         {
-            int k = 0;
             string msg = "";
-            for (int j = 0, i = 0; j + i + k * bm.Width < len;)
+            for (int j = 0, i = 0; ;)
             {
-                msg += (char)bm.GetPixel(j, i).B;
+                char appendChar = (char)bm.GetPixel(j, i).B;
+                if (appendChar == '\0') break;
+                msg += appendChar;
                 if (j < bm.Width-1)
                 {
                     ++j;
@@ -45,12 +50,11 @@ namespace Steganografie
                 else if (i < bm.Height-1)
                 {
                     j = 0;
-                    ++k;
                     ++i;
                 }
                 else
                 {
-                    throw new Exception("Length is bigger then bitmap");
+                    break;
                 }
             }
             return msg;
@@ -59,8 +63,8 @@ namespace Steganografie
 
         static void Main(string[] args)
         {
-            
-            if (args.Length < 3)
+            //rewrite arguments handling 
+            if (args.Length < 1)
             {
                 Console.WriteLine("Not enough or invalid command line arguments.");
                 return;
@@ -68,6 +72,11 @@ namespace Steganografie
             string mode = args[0];
             if(mode == "do")
             {
+                if (args.Length < 3)
+                {
+                    Console.WriteLine("Not enough or invalid command line arguments.");
+                    return;
+                }
                 string bmpLocation = args[1];
                 string msg = args[2];
                 Bitmap bm = (Bitmap)Bitmap.FromFile(bmpLocation);
@@ -76,10 +85,14 @@ namespace Steganografie
             }
             else if(mode == "undo")
             {
+                if (args.Length < 2)
+                {
+                    Console.WriteLine("Not enough or invalid command line arguments.");
+                    return;
+                }
                 string bmpLocation = args[1];
-                int msgLength = Int32.Parse(args[2]);
                 Bitmap bm = (Bitmap)Bitmap.FromFile(bmpLocation);
-                Console.WriteLine("message: " + UndoSteganography(bm, msgLength));
+                Console.WriteLine("message: " + UndoSteganography(bm));
             }
             else
             {
